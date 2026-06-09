@@ -7,13 +7,18 @@ import org.testng.annotations.BeforeMethod;
 
 public class BaseTest {
     protected WebDriver driver;
+    protected ConfigManager config;
 
     @BeforeMethod
     public void setUpDriver(){
 
         driver = new ChromeDriver();
 
-        driver.get("https://www.saucedemo.com");
+        config = new ConfigManager();
+
+//      driver.get("https://www.saucedemo.com");
+
+        driver.get(config.getProperty("base.url"));
     }
 
     @AfterMethod
