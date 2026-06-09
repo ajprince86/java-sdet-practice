@@ -6,7 +6,6 @@ import java.util.Properties;
 
 public class ConfigManager {
     Properties props = new Properties();
-
     public ConfigManager(){
 
         InputStream input = getClass().getClassLoader().getResourceAsStream("config.properties");
