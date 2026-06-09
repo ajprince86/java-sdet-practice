@@ -19,11 +19,15 @@ public class LoginTest extends BaseTest {
     @Test
     public void testLogin(){
 
-        driver.findElement(By.id("user-name")).sendKeys("standard_user");
+        LoginPage loginPage = new LoginPage(driver);
 
-        driver.findElement(By.id("password")).sendKeys("secret_sauce");
+//        driver.findElement(By.id("user-name")).sendKeys("standard_user");
+//
+//        driver.findElement(By.id("password")).sendKeys("secret_sauce");
+//
+//        driver.findElement((By.id("login-button"))).click();
 
-        driver.findElement((By.id("login-button"))).click();
+        loginPage.login("standard_user","secret_sauce");
 
         Assert.assertEquals(driver.getTitle(),"Swag Labs");
 
@@ -34,11 +38,15 @@ public class LoginTest extends BaseTest {
     @Test
     public void testInvalidLogin(){
 
-        driver.findElement(By.id("user-name")).sendKeys("wrong_user");
+        LoginPage loginPage = new LoginPage(driver);
 
-        driver.findElement(By.id("password")).sendKeys("invalid_password");
+//        driver.findElement(By.id("user-name")).sendKeys("wrong_user");
+//
+//        driver.findElement(By.id("password")).sendKeys("invalid_password");
+//
+//        driver.findElement((By.id("login-button"))).click();
 
-        driver.findElement((By.id("login-button"))).click();
+        loginPage.login("wrong_user","invalid_password");
 
         Assert.assertEquals(driver.findElement(By.cssSelector("[data-test='error']")).getText(),"Epic sadface: Username and password do not match any user in this service");
 
