@@ -5,11 +5,15 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class InventoryTest extends BaseTest {
+    private InventoryPage inventoryPage;
+    private  LoginPage loginPage;
 
     @BeforeMethod
     public void login() {
 
-        LoginPage loginPage = new LoginPage(driver);
+        loginPage = new LoginPage(driver);
+
+        inventoryPage = new InventoryPage(driver);
 
         loginPage.login(config.getProperty("username"), config.getProperty("password"));
     }
@@ -17,11 +21,17 @@ public class InventoryTest extends BaseTest {
     @Test
     public void verifyTotalProducts(){
 
-        InventoryPage inventoryPage = new InventoryPage(driver);
-
         Assert.assertEquals(inventoryPage.getProductCount(),6);
 
     }
 
+    @Test
+    public void verifyCart(){
+
+        inventoryPage.addFirstProductToCart();
+
+        Assert.assertEquals(Integer.parseInt(inventoryPage.getCartCount()),1);
+
+    }
 
 }

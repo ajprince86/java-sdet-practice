@@ -1,25 +1,36 @@
 package com.sdet.practice;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
 public class InventoryPage {
     private WebDriver driver;
-
     private By productTitles = By.cssSelector("[data-test='inventory-item-name']");
-
-    private By itemInCartIcon = By.cssSelector(".shopping_cart_badge");
+    private By cartBadge = By.cssSelector(".shopping_cart_badge");
 
     private By sortButton = By.cssSelector(".product_sort_container");
+    private By addProductToCart = By.cssSelector("button[data-test^='add-to-cart']");
 
+    private By removeProductFromCart = By.cssSelector("button[data-test^='remove']");
+
+    private By cartLink = By.cssSelector(".shopping_cart_link");
+
+    private By footer = By.cssSelector(".footer-copy");
+
+    private By continueShopping = By.cssSelector("#continue-shopping");
+
+    private By inventoryItemDesc = By.cssSelector("div[data-test$='desc']");
     public InventoryPage(WebDriver driver) {
         this.driver = driver;
     }
-
     public int getProductCount(){
 
         List<WebElement> numberOfProducts = driver.findElements(productTitles);
@@ -39,6 +50,27 @@ public class InventoryPage {
         }
 
         return names;
+    }
+
+    public void addFirstProductToCart(){
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        wait.until(ExpectedConditions.elementToBeClickable(addProductToCart));
+
+        WebElement button = driver.findElement(addProductToCart);
+
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", button);
+
+    }
+
+    public String getCartCount(){
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(cartBadge));
+
+        return driver.findElement(cartBadge).getText();
     }
 
 }
